@@ -31,6 +31,7 @@ class ReservacionController extends Controller
         return response()->json([
             'success' => true,
             'message' => 'Reservación creada con éxito',
+            'fechas' => $request
         ]);
     }
     public function editar_reservacion(Request $request, $id){
@@ -75,11 +76,21 @@ class ReservacionController extends Controller
             'message' => 'Reservación obtenida con éxito'
         ]);
     }
-    public function obtener_reservacion_habitacion($id){
+    public function obtener_reservaciones_habitacion($id){
         $reservaciones = Reservacion::where('habitacion_id', $id)->get();
+        $reservaciones_salida = [];
+        foreach($reservaciones as $reservacion){
+            $reservacion_salida = [];
+            $reservacion_salida['id'] = $reservacion->id;
+            $reservacion_salida['fecha_inicio'] = $reservacion->fecha_inicio;
+            $reservacion_salida['fecha_fin'] = $reservacion->fecha_fin;
+            $reservacion_salida['usuario'] = Usuario::find($reservacion->usuario_id);
+            $reservacion_salida['habitacion'] = Habitacion::find($reservacion->habitacion_id);
+            array_push($reservaciones_salida, $reservacion_salida);
+        }
         return response()->json([
             'success' => true,
-            'reservaciones' => $reservaciones,
+            'reservaciones' => $reservaciones_salida,
             'message' => 'Reservaciones obtenidas con éxito'
         ]);
     }

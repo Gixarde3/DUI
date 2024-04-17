@@ -13,8 +13,7 @@ class HabitacionController extends Controller
         $habitacion->descripcion = $request->descripcion;
         $habitacion->cantidad = $request->cantidad;
         $habitacion->precio = $request->precio;
-        $image = $request->file('imagen');
-        $habitacion->imagen = FileController::manejarArchivo($image, 'habitaciones');
+        $habitacion->imagen = FileController::manejarArchivo($request->file('imagen'));
         $habitacion->save();
         return response()->json([
             'success' => true,

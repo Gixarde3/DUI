@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\SugerenciaController;
 use App\Http\Controllers\ReservacionController;
+use App\Http\Controllers\ComidaController;
 
 /*
 |--------------------------------------------------------------------------
@@ -25,7 +26,7 @@ Route::group(['controller' => UsuarioController::class], function () {
     Route::delete('usuario/eliminar/{id}', 'eliminar_usuario');
     Route::get('usuarios', 'obtener_usuarios');
     Route::get('usuario/{id}', 'obtener_usuario');
-    Route::get('usuario/cambiar_rol/{id}', 'cambiar_rol');
+    Route::post('usuario/cambiar-rol/{id}', 'cambiar_rol');
 });
 
 Route::group(['controller' => HabitacionController::class], function () {
@@ -51,5 +52,15 @@ Route::group(['controller' => ReservacionController::class], function () {
     Route::post('reservacion/editar/{id}', 'editar_reservacion');
     Route::delete('reservacion/eliminar/{id}', 'eliminar_reservacion');
     Route::get('reservaciones', 'obtener_reservaciones');
+    Route::get('reservaciones/{id}', 'obtener_reservaciones_habitacion');
     Route::get('reservacion/{id}', 'obtener_reservacion');
+});
+
+//Rutas de comidas
+Route::group(['controller' => ComidaController::class], function () {
+    Route::post('platillo', 'crear_platillo');
+    Route::post('platillo/editar/{id}', 'editar_platillo');
+    Route::delete('platillo/eliminar/{id}', 'eliminar_platillo');
+    Route::get('platillos', 'obtener_platillos');
+    Route::get('platillo/{id}', 'obtener_platillo');
 });
